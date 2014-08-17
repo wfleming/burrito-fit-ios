@@ -13,7 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ZeroPushDelegate {
                             
   var window: UIWindow?
 
-
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary?) -> Bool {
     //ZeroPush setup
     ZeroPush.engageWithAPIKey("HS8zsszZNboML3myKh1x", delegate: self) // currently the dev key: update for environments later
@@ -33,6 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ZeroPushDelegate {
 
     // Google Anlytics init
     GAI.sharedInstance().trackerWithTrackingId("UA-53906906-2")
+
+    // default defaults
+    NSUserDefaults.standardUserDefaults().registerDefaults(["apiToken": ""])
 
     return true
   }
