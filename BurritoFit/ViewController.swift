@@ -8,11 +8,16 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIWebViewDelegate {
+
+  @IBOutlet weak var webView: UIWebView!
                             
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
+
+    let url = NSURL(string: "https://YOUR_DOMAIN")
+    let request = NSURLRequest(URL: url)
+    webView.loadRequest(request)
   }
 
   override func didReceiveMemoryWarning() {

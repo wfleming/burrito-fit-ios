@@ -9,3 +9,6 @@
 #import <ZeroPush/ZeroPush.h>
 #import <AFNetworking/AFNetworking.h>
 
+
+#import <GoogleAnalytics-iOS-SDK/GAI.h>
+#import <GoogleAnalytics-iOS-SDK/GAIFields.h>

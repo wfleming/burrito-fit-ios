@@ -277,7 +277,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export GIT_BUNDLE_VERSION=`git rev-parse --short HEAD`";
+			shellScript = "export GIT_BUNDLE_VERSION=`git rev-parse --short HEAD`\n\n#TODO: rethink this by having it write to a xccconfig file?";
 		};
 		C809E67493224D8790E90372 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
