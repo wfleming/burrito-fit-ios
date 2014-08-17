@@ -1,0 +1,48 @@
+PODS:
+  - ADiOSUtilities (1.0.0):
+    - ADiOSUtilities/ADFoundationAdditions
+    - ADiOSUtilities/ADHelpers
+    - ADiOSUtilities/ADUIKitAdditions
+  - ADiOSUtilities/ADFoundationAdditions (1.0.0)
+  - ADiOSUtilities/ADHelpers (1.0.0)
+  - ADiOSUtilities/ADUIKitAdditions (1.0.0)
+  - AFNetworking (2.3.1):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+    - AFNetworking/UIKit
+  - AFNetworking/NSURLConnection (2.3.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.3.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.3.1)
+  - AFNetworking/Security (2.3.1)
+  - AFNetworking/Serialization (2.3.1)
+  - AFNetworking/UIKit (2.3.1):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - GoogleAnalytics-iOS-SDK (3.0.9)
+  - Seriously (2.0.0)
+  - ZeroPush (1.1.0):
+    - ADiOSUtilities (~> 1.0.0)
+    - Seriously (~> 2.0.0)
+
+DEPENDENCIES:
+  - AFNetworking
+  - GoogleAnalytics-iOS-SDK
+  - ZeroPush
+
+SPEC CHECKSUMS:
+  ADiOSUtilities: 4b3347dc334c55d890becd65a6f94c9984fd82a6
+  AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3
+  GoogleAnalytics-iOS-SDK: d9e198b1f955259a72886769be7377cdfcdb2250
+  Seriously: 46d22ba1ae046629e2586364bce44ee838828291
+  ZeroPush: 7e26e4abc1573cd559092ebcb2f79582abd7c41e
+
+COCOAPODS: 0.33.1
