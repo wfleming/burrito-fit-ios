@@ -11,11 +11,11 @@ import UIKit
 class ViewController: UIViewController, UIWebViewDelegate {
 
   @IBOutlet weak var webView: UIWebView!
-  //  var siteRoot = "https://YOUR_DOMAIN"
-  var siteRoot = "http://sigyn.local:5000"
-  var appSecretHeader = "X-AppSecret"
-  var defaultsKey = "apiToken"
-  var appSecret = "YOUR_SECRET"
+////  let siteRoot = "https://YOUR_DOMAIN"
+  let siteRoot = "http://sigyn.local:5000"
+  let appSecretHeader = "X-AppSecret"
+  let defaultsKey = "apiToken"
+  let appSecret = "YOUR_SECRET"
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -79,7 +79,20 @@ class ViewController: UIViewController, UIWebViewDelegate {
         defaults.setObject(apiToken, forKey: defaultsKey)
 
         // register the device token with the server for notifications
-        //TODO
+        let mgr = AFHTTPRequestOperationManager()
+        mgr.requestSerializer.setValue(apiToken, forHTTPHeaderField: "X-ApiToken")
+        mgr.requestSerializer.setValue("application/json", forHTTPHeaderField: "Accept")
+        mgr.responseSerializer = AFJSONResponseSerializer()
+        mgr.POST(
+          "\(siteRoot)/api/v1/ios_device_tokens",
+          parameters: ["token": defaults.stringForKey("deviceToken")],
+          success: { (request: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            NSLog("creating device token on server succeeded")
+          },
+          failure: { (request: AFHTTPRequestOperation!, err: NSError!) -> Void in
+            NSLog("creating device token on server failed: %@", err)
+          }
+        )
       } else {
         NSLog("Got an unexpected type of object parsing json: %@", jsonStr)
       }

@@ -34,7 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ZeroPushDelegate {
     GAI.sharedInstance().trackerWithTrackingId("UA-53906906-2")
 
     // default defaults
-    NSUserDefaults.standardUserDefaults().registerDefaults(["apiToken": ""])
+    NSUserDefaults.standardUserDefaults().registerDefaults(
+      ["apiToken": "", "deviceToken": ""]
+    )
 
     return true
   }
@@ -71,6 +73,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ZeroPushDelegate {
     let tokenString = ZeroPush.deviceTokenFromData(deviceToken)
     //TODO: store this token & push it to server when we have a user
     NSLog("got a tokenString: %@", tokenString)
+
+    NSUserDefaults.standardUserDefaults().setObject(tokenString, forKey: "deviceToken")
   }
 
   func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
