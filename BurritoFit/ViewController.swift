@@ -11,8 +11,7 @@ import UIKit
 class ViewController: UIViewController, UIWebViewDelegate {
 
   @IBOutlet weak var webView: UIWebView!
-////  let siteRoot = "https://YOUR_DOMAIN"
-  let siteRoot = "http://sigyn.local:5000"
+  let siteRoot = "https://YOUR_DOMAIN"
   let appSecretHeader = "X-AppSecret"
   let defaultsKey = "apiToken"
   let appSecret = "YOUR_SECRET"
@@ -24,7 +23,7 @@ class ViewController: UIViewController, UIWebViewDelegate {
     webView.scrollView.bounces = false
 
     let url = NSURL(string: "\(siteRoot)/app_dashboard")
-    let request = NSURLRequest(URL: url)
+    let request = NSURLRequest(URL: url!)
     webView.loadRequest(request)
   }
 
@@ -35,8 +34,8 @@ class ViewController: UIViewController, UIWebViewDelegate {
 
   // UIWebView delegate methods
   func webView(webView: UIWebView!, shouldStartLoadWithRequest request: NSURLRequest!, navigationType: UIWebViewNavigationType) -> Bool {
-    let inOurDomain = request.URL.absoluteString.hasPrefix(siteRoot)
-    let headerIsPresent = (nil != request.allHTTPHeaderFields[appSecretHeader])
+    let inOurDomain = request.URL.absoluteString!.hasPrefix(siteRoot)
+    let headerIsPresent = (nil != request.allHTTPHeaderFields![appSecretHeader])
     if (!inOurDomain || headerIsPresent) {
       return true
     }
@@ -47,7 +46,7 @@ class ViewController: UIViewController, UIWebViewDelegate {
       mutableRequest.addValue(self.appSecret, forHTTPHeaderField: self.appSecretHeader)
 
       let defaults = NSUserDefaults.standardUserDefaults()
-      if(!defaults.stringForKey(self.defaultsKey).isEmpty) {
+      if( nil != defaults.stringForKey(self.defaultsKey) && !defaults.stringForKey(self.defaultsKey)!.isEmpty ) {
         mutableRequest.addValue(defaults.stringForKey(self.defaultsKey), forHTTPHeaderField: "X-ApiToken")
       }
 
@@ -63,14 +62,14 @@ class ViewController: UIViewController, UIWebViewDelegate {
   func webViewDidFinishLoad(webView: UIWebView!) {
     NSLog("webViewDidFinishLoad")
 
-    let urlString = webView.request.URL.absoluteString
-    if (urlString.hasSuffix("finished_sign_in")) {
+    let urlString = webView.request?.URL.absoluteString
+    if (urlString != nil && urlString!.hasSuffix("finished_sign_in")) {
       // we should be able to pull the API token from the page & store it
       let js = "document.getElementById('api-info').innerHTML"
       let jsonStr = webView.stringByEvaluatingJavaScriptFromString(js)
-      let jsonData = jsonStr.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+      let jsonData = jsonStr!.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
       let jsonDict = NSJSONSerialization.JSONObjectWithData(
-        jsonData, options: NSJSONReadingOptions(), error: nil
+        jsonData!, options: NSJSONReadingOptions(), error: nil
       ) as? Dictionary<String, String>
       if( nil != jsonDict ) {
         // write the token to defaults for future runs
@@ -86,15 +85,15 @@ class ViewController: UIViewController, UIWebViewDelegate {
         mgr.POST(
           "\(siteRoot)/api/v1/ios_device_tokens",
           parameters: ["token": defaults.stringForKey("deviceToken")],
-          success: { (request: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+          success: { (request: AFHTTPRequestOperation!, response: AnyObject!) -> (Void!) in
             NSLog("creating device token on server succeeded")
           },
-          failure: { (request: AFHTTPRequestOperation!, err: NSError!) -> Void in
+          failure: { (request: AFHTTPRequestOperation!, err: NSError!) -> (Void!) in
             NSLog("creating device token on server failed: %@", err)
           }
         )
       } else {
-        NSLog("Got an unexpected type of object parsing json: %@", jsonStr)
+        NSLog("Got an unexpected type of object parsing json: %@", jsonStr!)
       }
     }
   }
