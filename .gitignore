@@ -24,3 +24,6 @@ Pods/
 # App specific
 #
 BurritoFit/environments/*.xcconfig
+
+# Also
+.bundle
